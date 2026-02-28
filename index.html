@@ -2,207 +2,163 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
     <link rel="icon" href="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg">
     
-    <title>VaiperXmod - Supreme Dashboard</title>
+    <title>VaiperXmod - Ultimate Menu 2026</title>
     <style>
         :root {
             --primary: #ff0000;
-            --bg-dark: #050505;
-            --glow: 0 0 25px rgba(255, 0, 0, 0.7);
-            --sidebar-bg: rgba(10, 10, 10, 0.98);
+            --bg: #050505;
+            --sidebar-w: 220px;
+            --glow: 0 0 15px rgba(255, 0, 0, 0.6);
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
 
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #000; color: white;
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
-        }
-
-        /* --- Background ดาวตก --- */
-        .star-container { position: absolute; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .star { position: absolute; background: linear-gradient(90deg, white, transparent); height: 1px; animation: shoot 4s linear infinite; opacity: 0; }
-        @keyframes shoot {
-            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; width: 0; }
-            10% { opacity: 0.8; width: 150px; }
-            100% { transform: translateX(1000px) translateY(1000px) rotate(-45deg); opacity: 0; width: 0; }
-        }
-
-        /* --- Pre-loader เครดิต Vaiperx --- */
+        /* --- 1. หน้า Loading เครดิต Vaiperx --- */
         #pre-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: black; z-index: 10000; display: flex; flex-direction: column;
             justify-content: center; align-items: center; transition: opacity 0.8s;
         }
-        .loader-logo { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--primary); box-shadow: var(--glow); margin-bottom: 25px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        .load-bar { width: 300px; height: 5px; background: #222; border-radius: 10px; overflow: hidden; }
-        .load-fill { width: 0%; height: 100%; background: var(--primary); animation: fill 3.5s forwards; }
+        .loader-logo { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: var(--glow); margin-bottom: 20px; }
+        .load-bar { width: 220px; height: 4px; background: #222; border-radius: 10px; overflow: hidden; }
+        .load-fill { width: 0%; height: 100%; background: var(--primary); animation: fill 3s forwards; }
         @keyframes fill { to { width: 100%; } }
 
-        /* --- UI Main Container (เต็มจอ) --- */
-        .container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(20px);
+        /* --- 2. Background ดาวตก --- */
+        .star-container { position: absolute; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .star { position: absolute; background: linear-gradient(90deg, white, transparent); height: 1px; animation: shoot 4s linear infinite; opacity: 0; }
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; width: 0; }
+            10% { opacity: 0.8; width: 100px; }
+            100% { transform: translateX(800px) translateY(800px) rotate(-45deg); opacity: 0; width: 0; }
+        }
+
+        /* --- 3. UI Main Layout --- */
+        .app-container {
+            position: relative; width: 100%; height: 100%; z-index: 10;
+            display: flex; flex-direction: column; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px);
         }
 
         .header {
-            background: linear-gradient(90deg, #d32f2f, #300);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            letter-spacing: 2px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            background: linear-gradient(90deg, #d32f2f, #300); padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center; font-weight: bold;
         }
 
-        .main-content { display: flex; flex: 1; overflow: hidden; }
+        .main-layout { display: flex; flex: 1; overflow: hidden; }
 
-        /* Sidebar */
         .sidebar {
-            width: 250px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid rgba(255, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            padding: 40px 0;
+            width: var(--sidebar-w); background: rgba(10,10,10,0.95);
+            border-right: 1px solid rgba(255,0,0,0.2); display: flex; flex-direction: column;
         }
 
-        .avatar-ring { width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: var(--glow); overflow: hidden; margin: 0 auto 15px auto; }
-        .avatar-ring img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .nav-btn {
-            padding: 20px 35px; cursor: pointer; transition: 0.3s; color: #666; font-weight: 600;
-            display: flex; align-items: center; gap: 15px; border-left: 5px solid transparent;
-        }
-        .nav-btn:hover, .nav-btn.active { color: white; background: rgba(255, 0, 0, 0.1); border-left: 5px solid var(--primary); }
+        .profile { padding: 25px 10px; text-align: center; }
+        .avatar { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: var(--glow); margin-bottom: 10px; }
 
-        /* Content Area */
-        .tab-content { flex: 1; padding: 50px; display: none; overflow-y: auto; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .nav-btn { padding: 18px 25px; cursor: pointer; color: #777; transition: 0.3s; border-left: 5px solid transparent; font-size: 14px; }
+        .nav-btn.active { color: white; background: rgba(255,0,0,0.1); border-left-color: var(--primary); }
 
-        .group-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 20px 30px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            max-width: 800px;
+        /* Content */
+        .content-area { flex: 1; padding: 30px; overflow-y: auto; display: none; }
+        .content-area.active { display: block; }
+
+        .card {
+            background: rgba(255,255,255,0.05); padding: 18px; border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Toggle */
-        .switch { position: relative; width: 55px; height: 28px; }
+        /* Switch */
+        .switch { position: relative; width: 48px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #333; transition: 0.4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background: white; transition: 0.4s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #333; transition: 0.4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; transition: 0.4s; border-radius: 50%; }
         input:checked + .slider { background: var(--primary); box-shadow: var(--glow); }
-        input:checked + .slider:before { transform: translateX(27px); }
+        input:checked + .slider:before { transform: translateX(24px); }
 
-        /* Preview Area ขวา */
-        .preview-pane {
-            width: 400px;
-            margin: 40px;
-            background: #000;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .char-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); }
+        /* Preview Right */
+        .preview-pane { width: 220px; background: #000; border-left: 1px solid rgba(255,0,0,0.2); position: relative; overflow: hidden; display: flex; justify-content: center; }
+        .char-img { height: 100%; object-fit: contain; filter: brightness(0.4); }
         .red-ef {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
-            opacity: 0; transition: 0.3s; filter: sepia(100%) saturate(8000%) hue-rotate(330deg) brightness(1.2) drop-shadow(0 0 15px red);
+            position: absolute; top: 0; height: 100%; object-fit: contain; opacity: 0; transition: 0.3s;
+            filter: sepia(100%) saturate(8000%) hue-rotate(330deg) brightness(1.2) drop-shadow(0 0 10px red);
             pointer-events: none;
         }
-        .head-z { clip-path: inset(0% 0% 83% 0%); }
-        .body-z { clip-path: inset(17% 0% 0% 0%); }
+        .head-z { clip-path: inset(0% 0% 82% 0%); }
+        .body-z { clip-path: inset(18% 0% 0% 0%); }
         .active-red { opacity: 1 !important; }
 
-        /* Start Game */
-        .start-btn {
-            position: absolute; bottom: 50px; right: 60px;
-            background: linear-gradient(45deg, #ff0000, #990000);
-            border: none; color: white; padding: 20px 60px;
-            font-size: 24px; font-weight: 900; border-radius: 60px;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 3px;
-            box-shadow: 0 10px 30px rgba(255,0,0,0.4); transition: 0.3s;
-        }
-        .start-btn:hover { transform: scale(1.1); filter: brightness(1.2); }
+        .btn-start { width: 100%; padding: 18px; background: linear-gradient(to right, #ff0000, #800000); border: none; color: white; font-weight: 900; text-transform: uppercase; cursor: pointer; letter-spacing: 2px; }
 
-        #inject-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 11000; display: none; flex-direction: column; justify-content: center; align-items: center; }
+        /* Injecting Screen */
+        #inject-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 11000; display: none; flex-direction: column; justify-content: center; align-items: center; }
+
+        /* Mobile Adjust */
+        @media (max-width: 650px) {
+            .sidebar { width: 80px; }
+            .sidebar span, .profile p { display: none; }
+            .preview-pane { width: 130px; }
+        }
     </style>
 </head>
 <body>
 
     <div id="pre-loader">
         <img src="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg" class="loader-logo">
-        <h1 style="letter-spacing: 10px; margin: 0;">VAIPERXMOD</h1>
-        <p style="color: red; font-weight: bold; margin-bottom: 30px;">AUTHENTICATED BY VAIPERX</p>
-        <div class="load-bar"><div class="load-fill"></div></div>
+        <p style="color:red; font-weight:bold; letter-spacing:3px; margin:0;">VAIPERXMOD</p>
+        <p style="color:white; font-size:10px; margin-top:5px;">Created by Vaiperx</p>
+        <div class="load-bar" style="margin-top:20px;"><div class="load-fill"></div></div>
     </div>
 
     <div id="inject-screen">
-        <h1 style="color: red; letter-spacing: 5px;">INJECTING DATA...</h1>
-        <div class="load-bar"><div id="inj-bar" style="width: 0%; height: 100%; background: red; box-shadow: 0 0 20px red;"></div></div>
-        <p id="inj-status" style="margin-top: 20px; color: #555;">Connecting to server...</p>
+        <h2 style="color:red; letter-spacing:5px;">INJECTING...</h2>
+        <div class="load-bar"><div id="inj-bar" style="width:0%; height:100%; background:red; box-shadow:0 0 10px red;"></div></div>
     </div>
 
     <div class="star-container" id="stars"></div>
 
-    <div class="container" id="mainApp">
+    <div class="app-container">
         <div class="header">
-            <span>VAIPERXMOD // ULTIMATE DESKTOP MENU</span>
-            <div onclick="toggleFull()" style="cursor:pointer; font-size: 14px; border: 1px solid white; padding: 2px 8px; border-radius: 4px;">FULLSCREEN</div>
+            <span>VAIPERXMOD // SUPREME MENU 2026</span>
+            <div onclick="toggleFull()" style="background:rgba(255,255,255,0.1); padding:5px 12px; border-radius:5px; cursor:pointer; font-size:12px;">FULLSCREEN</div>
         </div>
 
-        <div class="main-content">
+        <div class="main-layout">
             <div class="sidebar">
-                <div class="avatar-ring"><img src="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg"></div>
-                <p style="text-align:center; color:red; font-size:16px; font-weight:bold; letter-spacing: 1px;">VaiperXmod</p>
-                
-                <div class="nav-btn active" onclick="tab('aim', this)">🎯 AIM FUNCTION</div>
-                <div class="nav-btn" onclick="tab('anti', this)">🛡️ ANTI-BAN PLUS</div>
-                <div class="nav-btn" onclick="tab('fps', this)">⚡ BOOST PERFORMANCE</div>
+                <div class="profile">
+                    <img src="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg" class="avatar">
+                    <p style="color:red; font-size:14px; font-weight:bold; margin-top:10px;">VaiperXmod</p>
+                </div>
+                <div class="nav-btn active" onclick="tab('aim', this)">🎯 <span>AIM FUNCTION</span></div>
+                <div class="nav-btn" onclick="tab('anti', this)">🛡️ <span>ANTI-BAN PLUS</span></div>
+                <div class="nav-btn" onclick="tab('fps', this)">⚡ <span>PERFORMANCE</span></div>
             </div>
 
-            <div id="aim" class="tab-content active">
-                <div class="group-card"><span>ดูดหัว (Head-Lock 100%)</span><label class="switch"><input type="checkbox" id="h-sw" onchange="run()"><span class="slider"></span></label></div>
-                <div class="group-card"><span>เป้าดูดง่าย (Soft Aim)</span><label class="switch"><input type="checkbox" id="b-sw" onchange="run()"><span class="slider"></span></label></div>
-                <div class="group-card"><span>ช่วยลากหัว (Auto Drag)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>ปิดทำงานทั้งหมด (Reset)</span><label class="switch"><input type="checkbox" id="off-sw" onchange="run()"><span class="slider"></span></label></div>
+            <div id="aim" class="content-area active">
+                <div class="card"><span>ดูดหัว (Head Lock)</span><label class="switch"><input type="checkbox" id="h-sw" onchange="run()"><span class="slider"></span></label></div>
+                <div class="card"><span>เป้าดูดง่าย (Soft Aim)</span><label class="switch"><input type="checkbox" id="b-sw" onchange="run()"><span class="slider"></span></label></div>
+                <div class="card"><span>ช่วยลากหัว (Auto Drag)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>ปิดฟังก์ชันทั้งหมด</span><label class="switch"><input type="checkbox" id="off-sw" onchange="run()"><span class="slider"></span></label></div>
             </div>
 
-            <div id="anti" class="tab-content">
-                <div class="group-card"><span>กันดำ (Anti-Blacklist)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>กันแบนถาวร (Bypass Security)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>หันรีพอร์ต (Anti-Report)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>กันตัวละครดำ</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div id="anti" class="content-area">
+                <div class="card"><span>กันแบนถาวร (Anti-Ban)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>กันดำ (Anti-Blacklist)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>กันรีพอร์ต (Anti-Report)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>Bypass Security v2</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             </div>
 
-            <div id="fps" class="tab-content">
-                <div class="group-card"><span>ปลดล็อค 90 FPS</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>ลดความร้อนเครื่อง</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>ล้างไฟล์ขยะขยะ</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="group-card"><span>บูสสัญญาณเน็ต</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div id="fps" class="content-area">
+                <div class="card"><span>ปลดล็อค 90 FPS</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>ลดความร้อนเครื่อง (Cooling)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>ล้างไฟล์ขยะ (Deep Clean)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="card"><span>บูสสัญญาณเน็ต</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             </div>
 
             <div class="preview-pane">
@@ -212,32 +168,32 @@
             </div>
         </div>
 
-        <button class="start-btn" onclick="launch()">Start Free Fire</button>
+        <button class="btn-start" onclick="start()">Start Free Fire</button>
     </div>
 
     <script>
-        // 1. จัดการ Fullscreen
         function toggleFull() {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error: ${err.message}`);
+                });
             } else {
-                if (document.exitFullscreen) { document.exitFullscreen(); }
+                if (document.exitFullscreen) document.exitFullscreen();
             }
         }
 
-        // 2. ปิดหน้าโหลด
         window.onload = () => {
             setTimeout(() => {
-                document.getElementById('pre-loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('pre-loader').style.display = 'none', 800);
-            }, 3500);
+                const loader = document.getElementById('pre-loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 800);
+            }, 3000);
             createStars();
         };
 
-        // 3. ระบบดาวตก
         function createStars() {
             const sb = document.getElementById('stars');
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<20; i++) {
                 let s = document.createElement('div');
                 s.className = 'star';
                 s.style.top = Math.random()*100+"%";
@@ -247,39 +203,38 @@
             }
         }
 
-        // 4. ระบบ Tab
         function tab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content-area').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
         }
 
-        // 5. ระบบสีแดง
         function run() {
             const h = document.getElementById('h-sw').checked, b = document.getElementById('b-sw').checked, off = document.getElementById('off-sw').checked;
             const h_el = document.getElementById('h-ef'), b_el = document.getElementById('b-ef');
             h_el.classList.remove('active-red'); b_el.classList.remove('active-red');
-            if(off) { document.querySelectorAll('input[type="checkbox"]').forEach(i => i.checked = false); return; }
-            if(h) h_el.classList.add('active-red'); if(b) b_el.classList.add('active-red');
+            if(off) {
+                document.querySelectorAll('input[type="checkbox"]').forEach(i => i.checked = false);
+                return;
+            }
+            if(h) h_el.classList.add('active-red');
+            if(b) b_el.classList.add('active-red');
         }
 
-        // 6. ระบบเริ่มเกม
-        function launch() {
-            const inj = document.getElementById('inject-screen'), bar = document.getElementById('inj-bar'), st = document.getElementById('inj-status');
+        function start() {
+            const inj = document.getElementById('inject-screen'), bar = document.getElementById('inj-bar');
             inj.style.display = 'flex';
             let p = 0;
             const t = setInterval(() => {
-                p += Math.random() * 8;
+                p += Math.random()*10;
                 if(p >= 100) {
-                    p = 100; clearInterval(t);
-                    st.innerText = "Launching...";
+                    p = 100; bar.style.width = "100%";
+                    clearInterval(t);
                     window.location.href = "com.dts.freefireth://";
-                    setTimeout(() => inj.style.display = 'none', 2000);
+                    setTimeout(() => { inj.style.display = 'none'; }, 1000);
                 }
                 bar.style.width = p + "%";
-                if(p > 30) st.innerText = "Injecting Aim Scripts...";
-                if(p > 70) st.innerText = "Bypassing Anticheat...";
             }, 150);
         }
     </script>
