@@ -2,241 +2,338 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaiperX PANELAIM</title>
     
-    <link rel="icon" href="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg">
+    <link rel="apple-touch-icon" href="https://img5.pic.in.th/file/secure-sv1/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpeg">
     
-    <title>VaiperXmod - Ultimate Menu 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #ff0000;
-            --bg: #050505;
-            --sidebar-w: 220px;
-            --glow: 0 0 15px rgba(255, 0, 0, 0.6);
+            --primary-red: #ff3b3b;
+            --glow-red: rgba(255, 59, 59, 0.6);
+            --bg-dark: #050505;
+            --glass: rgba(15, 15, 15, 0.85);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-
-        /* --- 1. หน้า Loading เครดิต Vaiperx --- */
-        #pre-loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: black; z-index: 10000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: opacity 0.8s;
-        }
-        .loader-logo { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: var(--glow); margin-bottom: 20px; }
-        .load-bar { width: 220px; height: 4px; background: #222; border-radius: 10px; overflow: hidden; }
-        .load-fill { width: 0%; height: 100%; background: var(--primary); animation: fill 3s forwards; }
-        @keyframes fill { to { width: 100%; } }
-
-        /* --- 2. Background ดาวตก --- */
-        .star-container { position: absolute; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .star { position: absolute; background: linear-gradient(90deg, white, transparent); height: 1px; animation: shoot 4s linear infinite; opacity: 0; }
-        @keyframes shoot {
-            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; width: 0; }
-            10% { opacity: 0.8; width: 100px; }
-            100% { transform: translateX(800px) translateY(800px) rotate(-45deg); opacity: 0; width: 0; }
+        body {
+            background: radial-gradient(circle, #220000 0%, #000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+            overflow: hidden;
+            color: white;
+            user-select: none;
+            /* ป้องกันการกดค้างแล้วขึ้นเมนูบน iOS */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
 
-        /* --- 3. UI Main Layout --- */
-        .app-container {
-            position: relative; width: 100%; height: 100%; z-index: 10;
-            display: flex; flex-direction: column; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px);
+        .window {
+            width: 580px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--primary-red);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.15);
         }
 
-        .header {
-            background: linear-gradient(90deg, #d32f2f, #300); padding: 12px 20px;
-            display: flex; justify-content: space-between; align-items: center; font-weight: bold;
+        .title-bar {
+            background: rgba(255, 59, 59, 0.15);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .main-layout { display: flex; flex: 1; overflow: hidden; }
+        .title-text {
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--primary-red);
+        }
+
+        .main-container {
+            display: flex;
+            height: 360px;
+        }
 
         .sidebar {
-            width: var(--sidebar-w); background: rgba(10,10,10,0.95);
-            border-right: 1px solid rgba(255,0,0,0.2); display: flex; flex-direction: column;
+            width: 135px;
+            background: rgba(0, 0, 0, 0.3);
+            padding-top: 25px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .profile { padding: 25px 10px; text-align: center; }
-        .avatar { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: var(--glow); margin-bottom: 10px; }
-
-        .nav-btn { padding: 18px 25px; cursor: pointer; color: #777; transition: 0.3s; border-left: 5px solid transparent; font-size: 14px; }
-        .nav-btn.active { color: white; background: rgba(255,0,0,0.1); border-left-color: var(--primary); }
-
-        /* Content */
-        .content-area { flex: 1; padding: 30px; overflow-y: auto; display: none; }
-        .content-area.active { display: block; }
-
-        .card {
-            background: rgba(255,255,255,0.05); padding: 18px; border-radius: 12px;
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
-        /* Switch */
-        .switch { position: relative; width: 48px; height: 24px; }
+        .profile-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            border: 2px solid var(--primary-red);
+            object-fit: cover;
+            box-shadow: 0 0 20px var(--glow-red);
+            transition: 0.3s;
+        }
+
+        .shop-name {
+            font-size: 11px;
+            margin-top: 12px;
+            color: #ff3b3b;
+            font-weight: 900;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 14px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: #555;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: white;
+            background: linear-gradient(90deg, rgba(255, 59, 59, 0.2) 0%, transparent 100%);
+            border-left: 4px solid var(--primary-red);
+        }
+
+        .content-section {
+            display: none;
+            flex: 1;
+            padding: 25px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-section.active { display: flex; justify-content: space-between; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .controls-group { width: 55%; }
+
+        .sub-title {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            border-left: 2px solid var(--primary-red);
+            padding-left: 8px;
+        }
+
+        .switch-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+        }
+
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #333; transition: 0.4s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; transition: 0.4s; border-radius: 50%; }
-        input:checked + .slider { background: var(--primary); box-shadow: var(--glow); }
-        input:checked + .slider:before { transform: translateX(24px); }
 
-        /* Preview Right */
-        .preview-pane { width: 220px; background: #000; border-left: 1px solid rgba(255,0,0,0.2); position: relative; overflow: hidden; display: flex; justify-content: center; }
-        .char-img { height: 100%; object-fit: contain; filter: brightness(0.4); }
-        .red-ef {
-            position: absolute; top: 0; height: 100%; object-fit: contain; opacity: 0; transition: 0.3s;
-            filter: sepia(100%) saturate(8000%) hue-rotate(330deg) brightness(1.2) drop-shadow(0 0 10px red);
-            pointer-events: none;
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #222;
+            transition: .4s;
+            border-radius: 20px;
         }
-        .head-z { clip-path: inset(0% 0% 82% 0%); }
-        .body-z { clip-path: inset(18% 0% 0% 0%); }
-        .active-red { opacity: 1 !important; }
 
-        .btn-start { width: 100%; padding: 18px; background: linear-gradient(to right, #ff0000, #800000); border: none; color: white; font-weight: 900; text-transform: uppercase; cursor: pointer; letter-spacing: 2px; }
-
-        /* Injecting Screen */
-        #inject-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 11000; display: none; flex-direction: column; justify-content: center; align-items: center; }
-
-        /* Mobile Adjust */
-        @media (max-width: 650px) {
-            .sidebar { width: 80px; }
-            .sidebar span, .profile p { display: none; }
-            .preview-pane { width: 130px; }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
         }
+
+        input:checked + .slider { background-color: var(--primary-red); box-shadow: 0 0 12px var(--glow-red); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .character-box {
+            width: 160px;
+            height: 260px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 59, 59, 0.4);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .character-img { height: 90%; transition: 0.5s; z-index: 1; }
+
+        .target-glow {
+            position: absolute;
+            top: 35px;
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--primary-red);
+            border-radius: 50%;
+            display: none;
+            z-index: 2;
+            box-shadow: 0 0 20px red;
+            animation: scan 1.5s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="pre-loader">
-        <img src="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg" class="loader-logo">
-        <p style="color:red; font-weight:bold; letter-spacing:3px; margin:0;">VAIPERXMOD</p>
-        <p style="color:white; font-size:10px; margin-top:5px;">Created by Vaiperx</p>
-        <div class="load-bar" style="margin-top:20px;"><div class="load-fill"></div></div>
+<div class="window">
+    <div class="title-bar">
+        <div class="title-text">
+            <i class="fa-solid fa-v" style="color: var(--primary-red);"></i> VaiperX PANELAIM
+        </div>
+        <div style="color: #666; font-size: 14px;">
+            <i class="fa-solid fa-minus" style="margin-right:15px;"></i>
+            <i class="fa-solid fa-xmark"></i>
+        </div>
     </div>
 
-    <div id="inject-screen">
-        <h2 style="color:red; letter-spacing:5px;">INJECTING...</h2>
-        <div class="load-bar"><div id="inj-bar" style="width:0%; height:100%; background:red; box-shadow:0 0 10px red;"></div></div>
-    </div>
-
-    <div class="star-container" id="stars"></div>
-
-    <div class="app-container">
-        <div class="header">
-            <span>VAIPERXMOD // SUPREME MENU 2026</span>
-            <div onclick="toggleFull()" style="background:rgba(255,255,255,0.1); padding:5px 12px; border-radius:5px; cursor:pointer; font-size:12px;">FULLSCREEN</div>
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <img src="https://img5.pic.in.th/file/secure-sv1/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpeg" class="profile-img">
+                <div class="shop-name">@Vaiperx</div>
+            </div>
+            
+            <div class="nav-item active" onclick="showTab('aimTab')">
+                <i class="fa-solid fa-crosshairs"></i> Aim Assist
+            </div>
+            <div class="nav-item" onclick="showTab('banTab')">
+                <i class="fa-solid fa-shield-virus"></i> Anti-Ban
+            </div>
+            <div class="nav-item" onclick="showTab('fpsTab')">
+                <i class="fa-solid fa-bolt"></i> Boost FPS
+            </div>
         </div>
 
-        <div class="main-layout">
-            <div class="sidebar">
-                <div class="profile">
-                    <img src="https://i.postimg.cc/NMPkYTdZ/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg" class="avatar">
-                    <p style="color:red; font-size:14px; font-weight:bold; margin-top:10px;">VaiperXmod</p>
+        <div id="aimTab" class="content-section active">
+            <div class="controls-group">
+                <div class="sub-title">AIM ASSIST CONFIG</div>
+                <div class="switch-wrapper">
+                    <span>ดูดหัวอัตโนมัติ</span>
+                    <label class="switch"><input type="checkbox" id="headshot"><span class="slider"></span></label>
                 </div>
-                <div class="nav-btn active" onclick="tab('aim', this)">🎯 <span>AIM FUNCTION</span></div>
-                <div class="nav-btn" onclick="tab('anti', this)">🛡️ <span>ANTI-BAN PLUS</span></div>
-                <div class="nav-btn" onclick="tab('fps', this)">⚡ <span>PERFORMANCE</span></div>
+                <div class="switch-wrapper">
+                    <span>ช่วยลากขึ้นหัว</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="switch-wrapper">
+                    <span>เป้าดูดติดตัว</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="switch-wrapper">
+                    <span>ลดแรงดีด</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
             </div>
 
-            <div id="aim" class="content-area active">
-                <div class="card"><span>ดูดหัว (Head Lock)</span><label class="switch"><input type="checkbox" id="h-sw" onchange="run()"><span class="slider"></span></label></div>
-                <div class="card"><span>เป้าดูดง่าย (Soft Aim)</span><label class="switch"><input type="checkbox" id="b-sw" onchange="run()"><span class="slider"></span></label></div>
-                <div class="card"><span>ช่วยลากหัว (Auto Drag)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>ปิดฟังก์ชันทั้งหมด</span><label class="switch"><input type="checkbox" id="off-sw" onchange="run()"><span class="slider"></span></label></div>
-            </div>
-
-            <div id="anti" class="content-area">
-                <div class="card"><span>กันแบนถาวร (Anti-Ban)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>กันดำ (Anti-Blacklist)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>กันรีพอร์ต (Anti-Report)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>Bypass Security v2</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            </div>
-
-            <div id="fps" class="content-area">
-                <div class="card"><span>ปลดล็อค 90 FPS</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>ลดความร้อนเครื่อง (Cooling)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>ล้างไฟล์ขยะ (Deep Clean)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-                <div class="card"><span>บูสสัญญาณเน็ต</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            </div>
-
-            <div class="preview-pane">
-                <img class="char-img" src="https://i.postimg.cc/cHQtknVQ/8D355855-2310-421D-9D1C-69A9FCC12649.png">
-                <img id="h-ef" class="red-ef head-z" src="https://i.postimg.cc/cHQtknVQ/8D355855-2310-421D-9D1C-69A9FCC12649.png">
-                <img id="b-ef" class="red-ef body-z" src="https://i.postimg.cc/cHQtknVQ/8D355855-2310-421D-9D1C-69A9FCC12649.png">
+            <div class="character-box">
+                <div class="target-glow" id="target"></div>
+                <img src="https://img5.pic.in.th/file/secure-sv1/8D355855-2310-421D-9D1C-69A9FCC12649.png" class="character-img" id="char">
             </div>
         </div>
 
-        <button class="btn-start" onclick="start()">Start Free Fire</button>
+        <div id="banTab" class="content-section">
+            <div class="controls-group">
+                <div class="sub-title">SECURITY SYSTEM</div>
+                <div class="switch-wrapper">
+                    <span>Bypass Anticheat</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="switch-wrapper">
+                    <span>Clean Log Files</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+            </div>
+        </div>
+
+        <div id="fpsTab" class="content-section">
+            <div class="controls-group">
+                <div class="sub-title">PERFORMANCE BOOST</div>
+                <div class="switch-wrapper">
+                    <span>Unlock 90 FPS</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="switch-wrapper">
+                    <span>Clear Memory</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
 
-    <script>
-        function toggleFull() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    alert(`Error: ${err.message}`);
-                });
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-            }
+<script>
+    function showTab(tabId) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    const hsBtn = document.getElementById('headshot');
+    const target = document.getElementById('target');
+    const charImg = document.getElementById('char');
+
+    hsBtn.addEventListener('change', function() {
+        if (this.checked) {
+            target.style.display = 'block';
+            charImg.style.filter = 'drop-shadow(0 0 15px red) brightness(1.2)';
+        } else {
+            target.style.display = 'none';
+            charImg.style.filter = 'none';
         }
+    });
+</script>
 
-        window.onload = () => {
-            setTimeout(() => {
-                const loader = document.getElementById('pre-loader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 800);
-            }, 3000);
-            createStars();
-        };
-
-        function createStars() {
-            const sb = document.getElementById('stars');
-            for(let i=0; i<20; i++) {
-                let s = document.createElement('div');
-                s.className = 'star';
-                s.style.top = Math.random()*100+"%";
-                s.style.left = Math.random()*100+"%";
-                s.style.animationDelay = Math.random()*5+"s";
-                sb.appendChild(s);
-            }
-        }
-
-        function tab(id, el) {
-            document.querySelectorAll('.content-area').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-        }
-
-        function run() {
-            const h = document.getElementById('h-sw').checked, b = document.getElementById('b-sw').checked, off = document.getElementById('off-sw').checked;
-            const h_el = document.getElementById('h-ef'), b_el = document.getElementById('b-ef');
-            h_el.classList.remove('active-red'); b_el.classList.remove('active-red');
-            if(off) {
-                document.querySelectorAll('input[type="checkbox"]').forEach(i => i.checked = false);
-                return;
-            }
-            if(h) h_el.classList.add('active-red');
-            if(b) b_el.classList.add('active-red');
-        }
-
-        function start() {
-            const inj = document.getElementById('inject-screen'), bar = document.getElementById('inj-bar');
-            inj.style.display = 'flex';
-            let p = 0;
-            const t = setInterval(() => {
-                p += Math.random()*10;
-                if(p >= 100) {
-                    p = 100; bar.style.width = "100%";
-                    clearInterval(t);
-                    window.location.href = "com.dts.freefireth://";
-                    setTimeout(() => { inj.style.display = 'none'; }, 1000);
-                }
-                bar.style.width = p + "%";
-            }, 150);
-        }
-    </script>
 </body>
 </html>
