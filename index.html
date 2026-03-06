@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VaiperX V3.0</title>
+    <title>VaiperX V3.0 - Ultimate</title>
 
     <link rel="apple-touch-icon" href="https://i.postimg.cc/sgs4jq5J/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="VaiperX V3.0">
 
     <style>
         :root {
             --primary-red: #ff003c;
             --bg-dark: #050505;
             --panel-bg: #0f0f0f;
+            --accent-glow: rgba(255, 0, 60, 0.4);
         }
 
         body, html {
@@ -24,42 +24,41 @@
             color: white; height: 100%;
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
-            -webkit-user-select: none; /* ห้ามลากคลุมข้อความ */
+            -webkit-user-select: none;
         }
 
-        /* --- หน้าจอโหลด (Loading Screen) --- */
+        /* --- Loading Screen --- */
         #loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: black; display: flex; flex-direction: column;
             justify-content: center; align-items: center; z-index: 9999;
             transition: opacity 0.5s ease;
         }
-        .loader-bar { width: 220px; height: 6px; background: #1a1a1a; border-radius: 10px; margin-top: 25px; overflow: hidden; border: 1px solid #333; }
-        .loader-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #ff0000, #ff003c); box-shadow: 0 0 15px var(--primary-red); }
-        #percent { font-size: 28px; font-weight: 800; color: var(--primary-red); text-shadow: 0 0 10px rgba(255, 0, 60, 0.5); }
+        .loader-bar { width: 240px; height: 4px; background: #1a1a1a; border-radius: 10px; margin-top: 25px; overflow: hidden; }
+        .loader-progress { width: 0%; height: 100%; background: var(--primary-red); box-shadow: 0 0 15px var(--primary-red); }
+        #percent { font-size: 32px; font-weight: 900; color: var(--primary-red); font-italic: italic; }
 
-        /* --- พาแนลหลัก --- */
+        /* --- Main Panel --- */
         .panel {
-            width: 95%; max-width: 600px;
+            width: 95%; max-width: 650px;
             background-color: var(--panel-bg);
             border: 1px solid #222; border-radius: 20px;
             display: none; flex-direction: column;
             box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-            animation: panelAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden;
+            animation: panelAppear 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
-        @keyframes panelAppear { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes panelAppear { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
         .header {
-            background: linear-gradient(90deg, #8b0000, #ff003c);
-            padding: 14px 22px; display: flex; justify-content: space-between;
+            background: linear-gradient(90deg, #600, var(--primary-red));
+            padding: 15px 25px; display: flex; justify-content: space-between;
             align-items: center; font-weight: bold; font-size: 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-radius: 19px 19px 0 0;
         }
 
-        .main-content { display: flex; height: 380px; }
+        .main-content { display: flex; height: 420px; }
 
-        /* Sidebar ฝั่งซ้าย */
+        /* Sidebar */
         .sidebar {
             width: 110px; background-color: #080808;
             display: flex; flex-direction: column; align-items: center;
@@ -67,75 +66,44 @@
         }
         .profile-img {
             width: 65px; height: 65px; border-radius: 50%;
-            border: 2.5px solid var(--primary-red);
+            border: 2px solid var(--primary-red);
             background: url('https://i.postimg.cc/9QF4tmfP/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg') center/cover;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.3); margin-bottom: 25px;
+            margin-bottom: 25px; box-shadow: 0 0 15px var(--accent-glow);
         }
-        .nav-item {
-            width: 100%; padding: 18px 0; text-align: center;
-            color: #666; font-size: 11px; font-weight: bold;
-            cursor: pointer; transition: 0.3s;
-        }
-        .nav-item.active, .nav-item:hover { color: var(--primary-red); background: rgba(255,0,60,0.05); }
-        .nav-icon { width: 30px; height: 30px; margin-bottom: 6px; fill: currentColor; }
+        .nav-item { width: 100%; padding: 20px 0; text-align: center; color: #444; font-size: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .nav-item.active { color: var(--primary-red); background: rgba(255,0,60,0.1); border-left: 3px solid var(--primary-red); }
 
         /* Settings Area */
-        .settings { flex: 1; padding: 30px; }
-        .settings h3 { font-size: 12px; color: #444; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2.5px; }
-        .option-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-        .option-label { font-size: 14px; color: #ccc; font-weight: 500; }
+        .settings { flex: 1; padding: 25px; overflow-y: auto; }
+        .settings h3 { font-size: 11px; color: #555; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .option-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .option-label { font-size: 13px; color: #ddd; }
 
-        /* iOS Switch */
-        .switch { position: relative; width: 46px; height: 26px; }
+        /* iOS Switch Custom */
+        .switch { position: relative; width: 44px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #222; transition: .4s; border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 20px; width: 20px;
-            left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--primary-red); box-shadow: 0 0 10px rgba(255, 0, 60, 0.4); }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-red); box-shadow: 0 0 10px var(--accent-glow); }
         input:checked + .slider:before { transform: translateX(20px); }
 
         /* Preview Area */
-        .preview-box {
-            width: 170px; position: relative;
-            background: radial-gradient(circle at center, #250000 0%, #050505 100%);
-            display: flex; justify-content: center; overflow: hidden;
-        }
-        .character-img { height: 95%; width: auto; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,0,0,0.1)); }
-        
-        /* จุดแดงตรงหัว */
-        .red-dot {
-            position: absolute; top: 56px; width: 15px; height: 15px;
-            background: radial-gradient(circle, #fff 0%, #ff0000 60%, #8b0000 100%);
-            border-radius: 50%; box-shadow: 0 0 15px #ff0000, 0 0 5px #fff;
-            display: none; z-index: 10;
-        }
+        .preview-box { width: 180px; position: relative; background: radial-gradient(circle, #200, #000); display: flex; justify-content: center; overflow: hidden; border-left: 1px solid #1a1a1a; }
+        .character-img { height: 90%; width: auto; object-fit: contain; align-self: flex-end; }
+        .red-dot { position: absolute; top: 62px; width: 14px; height: 14px; background: radial-gradient(circle, #fff, #f00); border-radius: 50%; box-shadow: 0 0 20px #f00; display: none; z-index: 10; }
 
-        /* --- Game Selector Popup --- */
+        /* Modal Launcher */
         #game-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none;
+            background: rgba(0,0,0,0.95); display: none;
             justify-content: center; align-items: center; z-index: 99999;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(15px);
         }
-        .modal-content {
-            background: #111; border: 1.5px solid var(--primary-red);
-            width: 290px; padding: 30px; border-radius: 25px; text-align: center;
-            box-shadow: 0 0 40px rgba(255,0,0,0.4);
-        }
-        .game-btn {
-            width: 100%; padding: 14px; margin: 12px 0; border: none;
-            border-radius: 12px; font-weight: 800; cursor: pointer;
-            transition: 0.2s; font-size: 15px; letter-spacing: 1px;
-        }
-        .btn-ff { background: linear-gradient(135deg, #ff8c00, #ff4500); color: white; }
-        .btn-ffmax { background: linear-gradient(135deg, #ff003c, #8b0000); color: white; }
-        .btn-close { background: transparent; color: #555; font-size: 12px; margin-top: 10px; text-decoration: underline; }
-        .game-btn:active { transform: scale(0.96); }
+        .modal-content { background: #111; border: 1px solid var(--primary-red); width: 300px; padding: 30px; border-radius: 25px; text-align: center; box-shadow: 0 0 50px rgba(255,0,0,0.3); }
+        .game-btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; transition: 0.2s; }
+        .btn-ff { background: linear-gradient(to right, #ff8c00, #ff4500); color: white; }
+        .btn-ffmax { background: linear-gradient(to right, #ff003c, #8b0000); color: white; }
+        .btn-ff:active, .btn-ffmax:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -143,55 +111,60 @@
     <div id="loading-screen">
         <div id="percent">0%</div>
         <div class="loader-bar"><div class="loader-progress" id="bar"></div></div>
-        <div style="margin-top: 18px; font-size: 11px; color: #555; letter-spacing: 4px; font-weight: bold;">VAIPERX V3.0 SYSTEM</div>
+        <p style="font-size: 10px; color: #333; margin-top: 10px; letter-spacing: 2px;">BY VAIPERX_SHOP</p>
     </div>
 
     <div id="game-modal">
         <div class="modal-content">
-            <h2 style="font-size: 20px; margin-bottom: 25px; letter-spacing: 1px;">LAUNCH GAME</h2>
-            <button class="game-btn btn-ff" onclick="launchGame('Free Fire')">FREE FIRE</button>
-            <button class="game-btn btn-ffmax" onclick="launchGame('Free Fire MAX')">FREE FIRE MAX</button>
-            <button class="game-btn btn-close" onclick="closeModal()">CLOSE</button>
+            <h2 style="font-size: 20px; margin-bottom: 25px; color: var(--primary-red);">CHOOSE VERSION</h2>
+            <button class="game-btn btn-ff" onclick="launchGame('freefire://')">FREE FIRE</button>
+            <button class="game-btn btn-ffmax" onclick="launchGame('freefiremax://')">FREE FIRE MAX</button>
+            <p style="color: #444; font-size: 11px; margin-top: 15px;" onclick="closeModal()">CLOSE PANEL</p>
         </div>
     </div>
 
     <div class="panel" id="main-panel">
         <div class="header">
-            <span>VAIPERX V3.0 | IOS PREMIUM</span>
-            <div style="display:flex; gap: 10px; opacity: 0.6;"><span>—</span><span>✕</span></div>
+            <span>VAIPERX V3.0 | BYPASS ULTIMATE</span>
+            <div style="opacity:0.5;">● ● ●</div>
         </div>
 
         <div class="main-content">
             <div class="sidebar">
                 <div class="profile-img"></div>
-                
-                <div class="nav-item active">
-                    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/></svg>
-                    AIMBOT
-                </div>
-
-                <div class="nav-item" onclick="openModal()">
-                    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                    OPEN GAME
-                </div>
+                <div class="nav-item active">MAIN</div>
+                <div class="nav-item" onclick="openModal()">OPEN GAME</div>
+                <div style="margin-top: auto; padding-bottom: 15px; color: #222; font-size: 9px;">IOS V1.0</div>
             </div>
 
             <div class="settings">
-                <h3>V3.0 PRESETS</h3>
+                <h3>AIM & DRAG FUNCTIONS</h3>
                 <div class="option-row">
                     <span class="option-label">ดูดหัว (Auto Headshot)</span>
                     <label class="switch"><input type="checkbox" id="toggle-head"><span class="slider"></span></label>
                 </div>
                 <div class="option-row">
-                    <span class="option-label">กันแบน (Anti-Ban V2)</span>
+                    <span class="option-label">ช่วยลากหัว (Easy Drag)</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+
+                <h3>PROTECTION (กันแบน)</h3>
+                <div class="option-row">
+                    <span class="option-label">กันแบน (Anti-Ban 100%)</span>
                     <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
                 </div>
                 <div class="option-row">
-                    <span class="option-label">บูส FPS (Performance)</span>
-                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                    <span class="option-label">กันรีพอร์ต (Anti-Report)</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
                 </div>
                 <div class="option-row">
-                    <span class="option-label">ความเร็วล็อค (Speed)</span>
+                    <span class="option-label">กันดำ (Anti-Blacklist)</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+
+                <h3>OPTIMIZE (เพิ่มความลื่น)</h3>
+                <div class="option-row">
+                    <span class="option-label">บูส FPS (120 FPS Max)</span>
                     <label class="switch"><input type="checkbox"><span class="slider"></span></label>
                 </div>
             </div>
@@ -204,40 +177,34 @@
     </div>
 
     <script>
-        // --- ระบบโหลด (Loading) ---
+        // ระบบ Loading 2 วินาที
         let progress = 0;
-        const bar = document.getElementById('bar');
-        const txt = document.getElementById('percent');
-        const loadScreen = document.getElementById('loading-screen');
-        const mainPanel = document.getElementById('main-panel');
-
-        const loadInterval = setInterval(() => {
+        const load = setInterval(() => {
             progress++;
-            txt.innerText = progress + "%";
-            bar.style.width = progress + "%";
+            document.getElementById('percent').innerText = progress + "%";
+            document.getElementById('bar').style.width = progress + "%";
             if(progress >= 100) {
-                clearInterval(loadInterval);
-                loadScreen.style.opacity = '0';
+                clearInterval(load);
+                document.getElementById('loading-screen').style.opacity = '0';
                 setTimeout(() => {
-                    loadScreen.style.display = 'none';
-                    mainPanel.style.display = 'flex';
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById('main-panel').style.display = 'flex';
                 }, 500);
             }
-        }, 20); // 2 วินาทีพอดี
+        }, 20);
 
-        // --- ระบบเปิด/ปิด จุดแดง (Headshot) ---
-        const toggleHead = document.getElementById('toggle-head');
-        const dot = document.getElementById('dot');
-        toggleHead.addEventListener('change', function() {
-            dot.style.display = this.checked ? 'block' : 'none';
+        // ระบบแสดงจุดแดงที่หัว
+        document.getElementById('toggle-head').addEventListener('change', function() {
+            document.getElementById('dot').style.display = this.checked ? 'block' : 'none';
         });
 
-        // --- ระบบหน้าต่างเลือกเกม (Modal) ---
+        // ระบบเปิดเกมสลับหน้าจอ (Deep Linking)
         function openModal() { document.getElementById('game-modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('game-modal').style.display = 'none'; }
-        function launchGame(name) {
-            alert(name + " กำลังเริ่มทำงาน...");
-            closeModal();
+        
+        function launchGame(scheme) {
+            window.location.href = scheme;
+            setTimeout(() => { closeModal(); }, 1000);
         }
     </script>
 </body>
