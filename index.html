@@ -3,301 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VaiperX PANELAIM</title>
-    
+    <title>VaiperX V3.0</title>
+
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/sgs4jq5J/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="VaiperX">
-    <link rel="apple-touch-icon" href="https://img5.pic.in.th/file/secure-sv1/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpeg">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="apple-mobile-web-app-title" content="VaiperX V3.0">
+
     <style>
         :root {
-            --primary-red: #ff3b3b;
-            --glow-red: rgba(255, 59, 59, 0.6);
+            --primary-red: #ff003c;
             --bg-dark: #050505;
-            --glass: rgba(15, 15, 15, 0.9);
+            --panel-bg: #0f0f0f;
         }
 
-        body {
-            background: radial-gradient(circle, #220000 0%, #000 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--bg-dark);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: white; height: 100%;
+            display: flex; justify-content: center; align-items: center;
             overflow: hidden;
-            color: white;
-            user-select: none;
-            -webkit-touch-callout: none;
+            -webkit-user-select: none; /* ห้ามลากคลุมข้อความ */
         }
 
-        /* ปรับขนาดหน้าต่างให้เล็กลง (Compact Mode) */
-        .window {
-            width: 340px; 
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid var(--primary-red);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        /* --- หน้าจอโหลด (Loading Screen) --- */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader-bar { width: 220px; height: 6px; background: #1a1a1a; border-radius: 10px; margin-top: 25px; overflow: hidden; border: 1px solid #333; }
+        .loader-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #ff0000, #ff003c); box-shadow: 0 0 15px var(--primary-red); }
+        #percent { font-size: 28px; font-weight: 800; color: var(--primary-red); text-shadow: 0 0 10px rgba(255, 0, 60, 0.5); }
+
+        /* --- พาแนลหลัก --- */
+        .panel {
+            width: 95%; max-width: 600px;
+            background-color: var(--panel-bg);
+            border: 1px solid #222; border-radius: 20px;
+            display: none; flex-direction: column;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            animation: panelAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; overflow: hidden;
+        }
+        @keyframes panelAppear { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        .header {
+            background: linear-gradient(90deg, #8b0000, #ff003c);
+            padding: 14px 22px; display: flex; justify-content: space-between;
+            align-items: center; font-weight: bold; font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .title-bar {
-            background: rgba(255, 59, 59, 0.1);
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        .main-content { display: flex; height: 380px; }
 
-        .title-text {
-            font-size: 11px;
-            letter-spacing: 1px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .main-container {
-            display: flex;
-            height: 280px; /* ลดความสูงลง */
-        }
-
-        /* Sidebar ขนาดกะทัดรัด */
+        /* Sidebar ฝั่งซ้าย */
         .sidebar {
-            width: 90px;
-            background: rgba(0, 0, 0, 0.3);
-            padding-top: 15px;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            width: 110px; background-color: #080808;
+            display: flex; flex-direction: column; align-items: center;
+            padding-top: 25px; border-right: 1px solid #1a1a1a;
         }
-
         .profile-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            border: 1.5px solid var(--primary-red);
-            object-fit: cover;
-            box-shadow: 0 0 10px var(--glow-red);
+            width: 65px; height: 65px; border-radius: 50%;
+            border: 2.5px solid var(--primary-red);
+            background: url('https://i.postimg.cc/9QF4tmfP/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg') center/cover;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.3); margin-bottom: 25px;
         }
-
-        .shop-name {
-            font-size: 9px;
-            margin-top: 8px;
-            color: var(--primary-red);
-            font-weight: bold;
-        }
-
         .nav-item {
-            width: 100%;
-            padding: 12px 0;
-            display: flex;
-            flex-direction: column; /* ไอคอนบน ข้อความล่าง */
-            align-items: center;
-            gap: 4px;
-            color: #555;
-            font-size: 9px;
-            cursor: pointer;
+            width: 100%; padding: 18px 0; text-align: center;
+            color: #666; font-size: 11px; font-weight: bold;
+            cursor: pointer; transition: 0.3s;
         }
+        .nav-item.active, .nav-item:hover { color: var(--primary-red); background: rgba(255,0,60,0.05); }
+        .nav-icon { width: 30px; height: 30px; margin-bottom: 6px; fill: currentColor; }
 
-        .nav-item i { font-size: 14px; }
+        /* Settings Area */
+        .settings { flex: 1; padding: 30px; }
+        .settings h3 { font-size: 12px; color: #444; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2.5px; }
+        .option-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+        .option-label { font-size: 14px; color: #ccc; font-weight: 500; }
 
-        .nav-item.active {
-            color: white;
-            background: rgba(255, 59, 59, 0.1);
-            border-left: 3px solid var(--primary-red);
-        }
-
-        /* Content Area */
-        .content-section {
-            display: none;
-            flex: 1;
-            padding: 15px;
-            flex-direction: column;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .content-section.active { display: flex; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .sub-title {
-            font-size: 9px;
-            color: #666;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .switch-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 8px 10px;
-            border-radius: 6px;
-            margin-bottom: 5px;
-            font-size: 11px;
-        }
-
-        /* ปุ่ม Switch ขนาดเล็กลง */
-        .switch {
-            position: relative;
-            width: 34px;
-            height: 18px;
-        }
-
+        /* iOS Switch */
+        .switch { position: relative; width: 46px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #222;
-            transition: .3s;
-            border-radius: 18px;
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #222; transition: .4s; border-radius: 34px;
         }
-
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 12px; width: 12px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
+            position: absolute; content: ""; height: 20px; width: 20px;
+            left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
         }
+        input:checked + .slider { background-color: var(--primary-red); box-shadow: 0 0 10px rgba(255, 0, 60, 0.4); }
+        input:checked + .slider:before { transform: translateX(20px); }
 
-        input:checked + .slider { background-color: var(--primary-red); }
-        input:checked + .slider:before { transform: translateX(16px); }
-
-        /* กล่องตัวละครย่อขนาด */
-        .character-box {
-            margin-top: 10px;
-            height: 100px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 59, 59, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
+        /* Preview Area */
+        .preview-box {
+            width: 170px; position: relative;
+            background: radial-gradient(circle at center, #250000 0%, #050505 100%);
+            display: flex; justify-content: center; overflow: hidden;
         }
-
-        .character-img { height: 90%; transition: 0.3s; }
+        .character-img { height: 95%; width: auto; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,0,0,0.1)); }
         
-        .target-glow {
-            position: absolute;
-            top: 15px;
-            width: 20px; height: 20px;
-            border: 1.5px solid var(--primary-red);
-            border-radius: 50%;
-            display: none;
-            box-shadow: 0 0 10px red;
+        /* จุดแดงตรงหัว */
+        .red-dot {
+            position: absolute; top: 56px; width: 15px; height: 15px;
+            background: radial-gradient(circle, #fff 0%, #ff0000 60%, #8b0000 100%);
+            border-radius: 50%; box-shadow: 0 0 15px #ff0000, 0 0 5px #fff;
+            display: none; z-index: 10;
         }
 
+        /* --- Game Selector Popup --- */
+        #game-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none;
+            justify-content: center; align-items: center; z-index: 99999;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: #111; border: 1.5px solid var(--primary-red);
+            width: 290px; padding: 30px; border-radius: 25px; text-align: center;
+            box-shadow: 0 0 40px rgba(255,0,0,0.4);
+        }
+        .game-btn {
+            width: 100%; padding: 14px; margin: 12px 0; border: none;
+            border-radius: 12px; font-weight: 800; cursor: pointer;
+            transition: 0.2s; font-size: 15px; letter-spacing: 1px;
+        }
+        .btn-ff { background: linear-gradient(135deg, #ff8c00, #ff4500); color: white; }
+        .btn-ffmax { background: linear-gradient(135deg, #ff003c, #8b0000); color: white; }
+        .btn-close { background: transparent; color: #555; font-size: 12px; margin-top: 10px; text-decoration: underline; }
+        .game-btn:active { transform: scale(0.96); }
     </style>
 </head>
 <body>
 
-<div class="window">
-    <div class="title-bar">
-        <div class="title-text">VaiperX PANELAIM</div>
-        <div style="color: #444; font-size: 12px;">
-            <i class="fa-solid fa-minus" style="margin-right:10px;"></i>
-            <i class="fa-solid fa-xmark"></i>
+    <div id="loading-screen">
+        <div id="percent">0%</div>
+        <div class="loader-bar"><div class="loader-progress" id="bar"></div></div>
+        <div style="margin-top: 18px; font-size: 11px; color: #555; letter-spacing: 4px; font-weight: bold;">VAIPERX V3.0 SYSTEM</div>
+    </div>
+
+    <div id="game-modal">
+        <div class="modal-content">
+            <h2 style="font-size: 20px; margin-bottom: 25px; letter-spacing: 1px;">LAUNCH GAME</h2>
+            <button class="game-btn btn-ff" onclick="launchGame('Free Fire')">FREE FIRE</button>
+            <button class="game-btn btn-ffmax" onclick="launchGame('Free Fire MAX')">FREE FIRE MAX</button>
+            <button class="game-btn btn-close" onclick="closeModal()">CLOSE</button>
         </div>
     </div>
 
-    <div class="main-container">
-        <div class="sidebar">
-            <img src="https://img5.pic.in.th/file/secure-sv1/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpeg" class="profile-img">
-            <div class="shop-name">@Vaiperx</div>
-            
-            <div class="nav-item active" onclick="showTab('aimTab')">
-                <i class="fa-solid fa-crosshairs"></i> Aim
-            </div>
-            <div class="nav-item" onclick="showTab('banTab')">
-                <i class="fa-solid fa-shield"></i> Security
-            </div>
-            <div class="nav-item" onclick="showTab('fpsTab')">
-                <i class="fa-solid fa-bolt"></i> FPS
-            </div>
+    <div class="panel" id="main-panel">
+        <div class="header">
+            <span>VAIPERX V3.0 | IOS PREMIUM</span>
+            <div style="display:flex; gap: 10px; opacity: 0.6;"><span>—</span><span>✕</span></div>
         </div>
 
-        <div id="aimTab" class="content-section active">
-            <div class="sub-title">Aim Config</div>
-            <div class="switch-wrapper">
-                <span>ดูดหัว</span>
-                <label class="switch"><input type="checkbox" id="headshot"><span class="slider"></span></label>
-            </div>
-            <div class="switch-wrapper">
-                <span>ช่วยลาก</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-            </div>
-            <div class="switch-wrapper">
-                <span>ลดแรงดีด</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-            </div>
-            
-            <div class="character-box">
-                <div class="target-glow" id="target"></div>
-                <img src="https://img5.pic.in.th/file/secure-sv1/8D355855-2310-421D-9D1C-69A9FCC12649.png" class="character-img" id="char">
-            </div>
-        </div>
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="profile-img"></div>
+                
+                <div class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/></svg>
+                    AIMBOT
+                </div>
 
-        <div id="banTab" class="content-section">
-            <div class="sub-title">Security</div>
-            <div class="switch-wrapper">
-                <span>Bypass</span>
-                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                <div class="nav-item" onclick="openModal()">
+                    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    OPEN GAME
+                </div>
             </div>
-            <div class="switch-wrapper">
-                <span>Clean Logs</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-            </div>
-        </div>
 
-        <div id="fpsTab" class="content-section">
-            <div class="sub-title">Performance</div>
-            <div class="switch-wrapper">
-                <span>Boost 90 FPS</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            <div class="settings">
+                <h3>V3.0 PRESETS</h3>
+                <div class="option-row">
+                    <span class="option-label">ดูดหัว (Auto Headshot)</span>
+                    <label class="switch"><input type="checkbox" id="toggle-head"><span class="slider"></span></label>
+                </div>
+                <div class="option-row">
+                    <span class="option-label">กันแบน (Anti-Ban V2)</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="option-row">
+                    <span class="option-label">บูส FPS (Performance)</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="option-row">
+                    <span class="option-label">ความเร็วล็อค (Speed)</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+            </div>
+
+            <div class="preview-box">
+                <div class="red-dot" id="dot"></div>
+                <img src="https://i.postimg.cc/nrpVF2jY/8D355855-2310-421D-9D1C-69A9FCC12649.png" class="character-img">
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    function showTab(tabId) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
+    <script>
+        // --- ระบบโหลด (Loading) ---
+        let progress = 0;
+        const bar = document.getElementById('bar');
+        const txt = document.getElementById('percent');
+        const loadScreen = document.getElementById('loading-screen');
+        const mainPanel = document.getElementById('main-panel');
 
-    const hsBtn = document.getElementById('headshot');
-    const target = document.getElementById('target');
-    const charImg = document.getElementById('char');
+        const loadInterval = setInterval(() => {
+            progress++;
+            txt.innerText = progress + "%";
+            bar.style.width = progress + "%";
+            if(progress >= 100) {
+                clearInterval(loadInterval);
+                loadScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadScreen.style.display = 'none';
+                    mainPanel.style.display = 'flex';
+                }, 500);
+            }
+        }, 20); // 2 วินาทีพอดี
 
-    hsBtn.addEventListener('change', function() {
-        if (this.checked) {
-            target.style.display = 'block';
-            charImg.style.filter = 'drop-shadow(0 0 10px red) brightness(1.1)';
-        } else {
-            target.style.display = 'none';
-            charImg.style.filter = 'none';
+        // --- ระบบเปิด/ปิด จุดแดง (Headshot) ---
+        const toggleHead = document.getElementById('toggle-head');
+        const dot = document.getElementById('dot');
+        toggleHead.addEventListener('change', function() {
+            dot.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // --- ระบบหน้าต่างเลือกเกม (Modal) ---
+        function openModal() { document.getElementById('game-modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('game-modal').style.display = 'none'; }
+        function launchGame(name) {
+            alert(name + " กำลังเริ่มทำงาน...");
+            closeModal();
         }
-    });
-</script>
-
+    </script>
 </body>
 </html>
